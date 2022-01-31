@@ -7,7 +7,6 @@ Docker is also configured to simplify the process of building, running, managing
 ## Available Scripts
 
 In the project directory, you can run
-docker build -t storage-app .
 
 ### `docker-compose build .`
 
