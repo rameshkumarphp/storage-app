@@ -7,11 +7,12 @@ import Layout from './pages/Layout';
 
 export default function App() {
   return (
+    //Defining various routes for our application
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<BucketList />} />
-          <Route path="/bucketdetail" element={<BucketDetail />} />
+          <Route path="/bucketdetail/:id" element={<BucketDetail />} />
           <Route path="*" element={<Page404 />} />
         </Route>
       </Routes>

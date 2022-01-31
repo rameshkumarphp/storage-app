@@ -7,6 +7,11 @@
   width:100%;
   margin-top:20px;
 }
+.bucket-container .error{
+  color:red;
+  font-weight: 500;
+}
+
 
 .brand-name{
   margin-left:5px;
@@ -15,3 +20,24 @@
 .button-container{
   margin-top: 10px;
 }
+
+.bucket-detail-container{
+  width: 100%;
+}
+.bucket-detail-container .default-upload{
+  display: none;
+}
+
+.bucket-detail-container button{
+  width:100%;
+}
+
+.bucket-detail-container .error{
+  color:red;
+  font-weight: 500;
+}
+
+.bucket-detail-container table{
+  margin-top:10px;
+}
+
