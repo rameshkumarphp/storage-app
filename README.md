@@ -8,7 +8,7 @@ Docker is also configured to simplify the process of building, running, managing
 
 In the project directory, you can run
 
-### `docker-compose build .`
+### `docker-compose build`
 
 First let's build the Docker image from the Dockerfile by running the docker-compose build command.
 

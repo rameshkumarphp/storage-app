@@ -5,9 +5,28 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
+//Redux libaray dependencies
+import { Provider } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
+import { createStore, applyMiddleware } from 'redux';
+
+import rootReducer from "./Redux/Reducers/index";
+import rootSaga from "./Redux/Sagas/index";
+const sagaMiddleware = createSagaMiddleware();
+
+const Store = createStore(
+  rootReducer,
+  applyMiddleware(sagaMiddleware)
+);
+
+sagaMiddleware.run(rootSaga);
+
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={Store}>
       <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

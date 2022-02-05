@@ -1,83 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import configData from '../config.json';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 const BucketList = () => {
+  const dispatch = useDispatch();
+
   const [createNewBucket, setCreateNewBucket] = useState(false);
   const [bucketName, setBucketName] = useState('');
-  const [location, setLocation] = useState({});
-  const [bucketList, setBucketList] = useState([]);
-  const [locationList, setLocationList] = useState([]);
-  const [error, setError] = useState('');
-
+  const [validError, setValidError] = useState('');
 
   useEffect(() => {
-    getLocationList();
-    getBucketList();
-  }, [])
+    dispatch({ type: 'GET_LOCATION_LIST' })
+    dispatch({ type: 'GET_BUCKET_LIST' })
+  }, [dispatch])
 
-  // Get the list of locations
-  const getLocationList = () => {
-    fetch(configData.baseUrl + '/locations', {
-      method: "GET",
-      headers: { "Authorization": "Token " + configData.token }
-    })
-      .then(response => response.json())
-      .then(
-        (result) => {
-          if (result.locations && result.locations.length > 0) {
-            setLocationList(result.locations);
-            setLocation(result.locations[0].id);
-          }
-        })
-      .catch(err => console.log(err));
-  }
-
-  //Get list of Buckets
-  const getBucketList = () => {
-    fetch(configData.baseUrl + '/buckets', {
-      method: "GET",
-      headers: { "Authorization": "Token " + configData.token }
-    })
-      .then(response => response.json())
-      .then(
-        (result) => {
-          if (result.buckets) {
-            setBucketList(result.buckets);
-          }
-        })
-      .catch(err => console.log(err));
-  }
+  const bucketList = useSelector((state) => state.bucketReducer.bucketData);
+  const locationListData = useSelector((state) => state.locationReducer.locationData);
+  let location = (locationListData && locationListData.length > 0) ? locationListData[0].id : "";
+  let error = useSelector((state) => state.bucketReducer.createBucketError);
 
   //Create new bucket
   const onCreateNewBucket = () => {
     if (bucketName !== '') {
-      setError('');
-      fetch(configData.baseUrl + '/buckets', {
-        method: "POST",
-        body: JSON.stringify({
-          "name": bucketName,
-          "location": location
-        }),
-        headers: { "Authorization": "Token " + configData.token }
+      error = "";
+      setValidError('');
+      setBucketName('');
+      let newBucket = JSON.stringify({
+        "name": bucketName,
+        "location": location
       })
-        .then(response => {
-          if (response.status === 201) {
-            getBucketList();
-            setBucketName('');
-            setCreateNewBucket(false);
-          } else {
-            setError(`Bucket name ${bucketName} already exists!`)
-          }
-        })
-        .catch(err => console.log(err));
+      dispatch({ type: 'CREATE_NEW_BUCKET', newBucket })
     } else {
-      setError('Please enter valid bucket name')
+      setValidError('Please enter valid bucket name');
     }
   }
   return (
     <div className='container'>
       <div className='bucket-container'>
+        <p className='error'>{validError}</p>
         <p className='error'>{error}</p>
         <h4>Bucket List</h4>
         {createNewBucket === true &&
@@ -92,8 +52,8 @@ const BucketList = () => {
             <div className="col-6">
               <div className="form-group">
                 <label>Bucket Location</label>
-                <select className="form-select" onChange={e => setLocation(e.target.value)}>
-                  {locationList.map((item, i) => {
+                <select className="form-select" onChange={(e) => { location = e.target.value }}>
+                  {locationListData && locationListData.length > 0 && locationListData.map((item, i) => {
                     return (
                       <option key={i} value={item.id}>{item.name}</option>
                     )
@@ -107,7 +67,7 @@ const BucketList = () => {
             </div>
           </div>}
         <div className="row bucket-list-container">
-          <div className="col-10"><h5>All Buckets ({bucketList.length})</h5></div>
+          <div className="col-10"><h5>All Buckets ({(bucketList && bucketList.length > 0) ? bucketList.length : 0})</h5></div>
           {createNewBucket === false && <div className="col-2"><button className='btn-primary' onClick={() => setCreateNewBucket(true)} type="button">Create New Bucket</button></div>}
         </div>
         {(bucketList && bucketList.length > 0) &&
