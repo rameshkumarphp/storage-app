@@ -15,19 +15,24 @@ import rootReducer from "./Redux/Reducers/index";
 import rootSaga from "./Redux/Sagas/index";
 const sagaMiddleware = createSagaMiddleware();
 
-const Store = createStore(
-  rootReducer,
-  applyMiddleware(sagaMiddleware)
-);
 
-sagaMiddleware.run(rootSaga);
 
-ReactDOM.render(
-  <React.StrictMode>
+const AppWrapper = () => {
+  const Store = createStore(
+    rootReducer,
+    applyMiddleware(sagaMiddleware)
+  );
+
+  sagaMiddleware.run(rootSaga);
+  return (
     <Provider store={Store}>
       <App />
     </Provider>
-  </React.StrictMode>,
+  )
+}
+
+ReactDOM.render(
+  <AppWrapper />,
   document.getElementById('root')
 );
 
