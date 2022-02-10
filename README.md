@@ -25,3 +25,7 @@ Alternatively you can use npm start to run the application in development enviro
 ### `npm run build`
 
 Builds the app for production to the build folder.
+
+### `npm run test`
+
+Runs the unit test cases.

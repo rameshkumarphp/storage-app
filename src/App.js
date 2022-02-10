@@ -5,10 +5,10 @@ import BucketList from "./pages/BucketList";
 import BucketDetail from "./pages/BucketDetail";
 import Layout from './pages/Layout';
 
-export default function App() {
+
+export const RoutesData = () => {
   return (
-    //Defining various routes for our application
-    <BrowserRouter>
+    <>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<BucketList />} />
@@ -16,6 +16,16 @@ export default function App() {
           <Route path="*" element={<Page404 />} />
         </Route>
       </Routes>
+    </>
+  )
+};
+
+
+export default function App() {
+  return (
+    //Defining various routes for our application
+    <BrowserRouter>
+      <RoutesData />
     </BrowserRouter>
   );
 }

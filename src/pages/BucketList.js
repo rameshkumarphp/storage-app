@@ -46,13 +46,13 @@ const BucketList = () => {
             <div className="col-6">
               <div className="form-group">
                 <label>Bucket Name</label>
-                <input type="text" className="form-control" value={bucketName} placeholder="Bucket Name" onChange={e => setBucketName(e.target.value)} />
+                <input type="text" data-testid="new-bucket-name" className="form-control" value={bucketName} placeholder="Bucket Name" onChange={e => setBucketName(e.target.value)} />
               </div>
             </div>
             <div className="col-6">
               <div className="form-group">
                 <label>Bucket Location</label>
-                <select className="form-select" onChange={(e) => { location = e.target.value }}>
+                <select data-testid="location-list" className="form-select" onChange={(e) => { location = e.target.value }}>
                   {locationListData && locationListData.length > 0 && locationListData.map((item, i) => {
                     return (
                       <option key={i} value={item.id}>{item.name}</option>
@@ -72,7 +72,7 @@ const BucketList = () => {
         </div>
         {(bucketList && bucketList.length > 0) &&
           <div className="row">
-            <table className="table">
+            <table className="table" data-testid='bucket-list-table'>
               <thead className="thead-light">
                 <tr>
                   <th scope="col-6">Name</th>

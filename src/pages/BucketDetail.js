@@ -108,7 +108,7 @@ const BucketDetail = () => {
     <div className="container">
       <div className='bucket-container'>
         <h4>My New Storage</h4>
-        <Tabs defaultActiveKey="files" id="uncontrolled-tab-example" className="mb-3">
+        <Tabs defaultActiveKey="files" data-testid="bucket-detail-tabs" className="mb-3">
           <Tab eventKey="files" title="Files">
             <div className="row bucket-detail-container">
               <p className='error'>{validError}</p>
@@ -163,7 +163,7 @@ const BucketDetail = () => {
             {(bucketDetail && bucketDetail.name && bucketDetail.location) ?
               <div className="row">
                 <div className="col-10">
-                  <table>
+                  <table data-testid="bucket-detail-table">
                     <tbody>
                       <tr>
                         <td><b>Name:</b></td>

@@ -25,7 +25,15 @@ test("Test create bucket button", () => {
   const buttonEl = screen.getByRole('button', {
     name: /Create New Bucket/i
   });
-
-  userEvent.click(buttonEl);
   expect(buttonEl).toHaveTextContent(/Create New bucket/i);
+  userEvent.click(buttonEl);
+  expect(screen.getByText(/Create New Bucket/i)).toBeInTheDocument();
+  expect(screen.getByText(/Bucket Name/i)).toBeInTheDocument();
+  expect(screen.getByText(/Bucket Location/i)).toBeInTheDocument();
+  const inputElement = screen.getByTestId('new-bucket-name');
+  expect(inputElement).toBeInTheDocument();
+  const selectElement = screen.getByTestId('location-list');
+  expect(selectElement).toBeInTheDocument();
 });
+
+
